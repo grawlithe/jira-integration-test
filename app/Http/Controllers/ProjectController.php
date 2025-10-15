@@ -13,10 +13,6 @@ class ProjectController extends Controller
     {
         $user = $request->user();
 
-        //$accessToken = $user->access_token;
-
-        //dd($accessToken);
-
         $client = new JiraService();
         $projectService = new JiraProjectService($client);
 
