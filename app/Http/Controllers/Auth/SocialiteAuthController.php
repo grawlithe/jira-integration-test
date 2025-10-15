@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class SocialiteAuthController extends Controller
 {
@@ -23,6 +24,9 @@ class SocialiteAuthController extends Controller
         try {
             // Get the user information from the provider
             $socialiteUser = Socialite::driver($provider)->user();
+            //Log::info('Socialite User:', (array)$socialiteUser);
+            //check if user is member of the
+
         } catch (\Exception $e) {
             // Handle error, such as user denied access or invalid state
             return redirect('/login')->withErrors(['social_login' => 'Could not authenticate with ' . ucfirst($provider) . '.']);
@@ -51,7 +55,7 @@ class SocialiteAuthController extends Controller
             // Store the provider ID and the token for future API calls if needed
             "{$provider}_id" => $socialiteUser->getId(),
             'access_token' => $socialiteUser->token, // Store the token securely if you need to make API calls later
-            'password' => \Hash::make(\Str::random(24)), // Create a dummy/random password as they're using social login
+            'password' => \Hash::make("password"), // Create a dummy/random password as they're using social login
         ]);
 
         Auth::login($user);

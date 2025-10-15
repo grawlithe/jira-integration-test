@@ -40,6 +40,9 @@ return [
         'client_secret' => env('ATLASSIAN_CLIENT_SECRET'),
         'redirect' => env('ATLASSIAN_REDIRECT_URI', '/auth/atlassian/callback'),
         'base_url' => 'https://auth.atlassian.com/oauth/token',
+        'jira_url' => env('JIRA_BASE_URL', 'https://your-domain.atlassian.net'),
+        'email' => env('JIRA_EMAIL'),
+        'api_token' => env('JIRA_API_TOKEN'),
     ],
 
 ];
