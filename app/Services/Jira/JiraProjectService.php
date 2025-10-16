@@ -15,7 +15,7 @@ class JiraProjectService
 
     public function fetchAll(): array
     {
-        $projects = $this->client->get('project/search');
+        $projects = $this->client->get('rest/api/3/project/search');
         //dd($projects);
         return $projects['values'] ?? [];
     }

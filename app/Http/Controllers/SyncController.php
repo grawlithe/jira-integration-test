@@ -28,12 +28,18 @@ class SyncController extends Controller
             Log::info("Syncing project {$project->key} with " . count($boards) . " boards.");
 
             foreach ($boards as $board) {
+
+                if($board['type'] !== 'scrum'){
+                    Log::info("  Skipping non-scrum board {$board['name']} ({$board['id']}) of type {$board['type']}.");
+                }
+
                 $activeSprints = $sprintService->syncActiveSprints($project->id,$board['id']);
 
                 Log::info("  Board {$board['name']} ({$board['id']}) has " . count($activeSprints) . " active sprints.");
 
                 foreach ($activeSprints as $sprintData) {
-                    $issueService->syncIssues($sprintData->id);
+
+                    $issueService->syncIssues($sprintData->id, $sprintData->jira_id);
 
                     Log::info("    Synced issues for sprint {$sprintData->name} ({$sprintData->id}).");
                 }

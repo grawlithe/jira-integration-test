@@ -17,7 +17,13 @@ class JiraBoardService
             'projectKeyOrId' => $projectKey,
         ]);
 
-        return $response['values'] ?? [];
+        $boards = $response['values'] ?? [];
+
+        // dd($boards);
+
+        return array_filter($boards, function ($board) {
+            return $board['type'] === 'scrum';
+        });
     }
 
 }

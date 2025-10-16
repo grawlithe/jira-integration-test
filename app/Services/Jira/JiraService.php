@@ -21,7 +21,7 @@ class JiraService
 
     protected function request(string $method, string $endpoint, array $params = [])
     {
-        $url = "{$this->baseUrl}/rest/api/3/{$endpoint}";
+        $url = "{$this->baseUrl}/{$endpoint}";
 
         $auth = base64_encode($this->email . ':' . $this->api_token);
         //dd($auth);
@@ -31,12 +31,12 @@ class JiraService
             ])->$method($url, $params);
 
         if ($response->failed()) {
-            dd([
-                'status' => $response->status(),
-                'body' => $response->body()
-            ]);
-            // Log::error("Jira API request failed: {$response->body()}");
-            // throw new \Exception("Jira API request failed with status {$response->status()}");
+            // dd([
+            //     'status' => $response->status(),
+            //     'body' => $response->body()
+            // ]);
+            Log::error("Jira API request failed: {$response->body()}");
+            throw new \Exception("Jira API request failed with status {$response->status()}");
         }
 
         return $response->json();

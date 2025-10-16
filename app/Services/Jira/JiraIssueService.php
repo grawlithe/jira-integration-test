@@ -16,17 +16,18 @@ class JiraIssueService
 
     public function fetchIssues(int $sprintId): array
     {
-
-        $response = $this->client->get("rest/agile/1.0sprint/{$sprintId}/issue",[
+        $response = $this->client->get("rest/agile/1.0/sprint/{$sprintId}/issue",[
             'fields' => 'summary,timetracking'
         ]);
+
+        //dd($response);
 
         return $response['issues'] ?? [];
     }
 
-    public function syncIssues(int $sprintId): Collection
+    public function syncIssues(int $sprintId, int $jiraSprintId): Collection
     {
-        $issues = collect($this->fetchIssues($sprintId));
+        $issues = collect($this->fetchIssues($jiraSprintId));
 
         return $issues->map(function ($issueData) use ($sprintId) {
 
