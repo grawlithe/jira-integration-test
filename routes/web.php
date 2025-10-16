@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\SocialiteAuthController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\SyncController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -19,7 +20,7 @@ Route::get('/', function () {
 
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{project}', [ProjectController::class, 'show']);
-Route::post('/sync', [ProjectController::class, 'syncAll']);
+Route::get('/sync', [SyncController::class, 'syncAll']);
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');

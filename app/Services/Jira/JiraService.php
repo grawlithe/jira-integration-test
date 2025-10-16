@@ -31,12 +31,12 @@ class JiraService
             ])->$method($url, $params);
 
         if ($response->failed()) {
-            // dd([
-            //     'status' => $response->status(),
-            //     'body' => $response->body()
-            // ]);
-            Log::error("Jira API request failed: {$response->body()}");
-            throw new \Exception("Jira API request failed with status {$response->status()}");
+            dd([
+                'status' => $response->status(),
+                'body' => $response->body()
+            ]);
+            // Log::error("Jira API request failed: {$response->body()}");
+            // throw new \Exception("Jira API request failed with status {$response->status()}");
         }
 
         return $response->json();
