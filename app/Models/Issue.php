@@ -14,4 +14,14 @@ class Issue extends Model
         'time_estimate',
         'time_spent'
     ];
+
+    public function sprint()
+    {
+        return $this->belongsTo(Sprint::class);
+    }
+
+    public function project()
+    {
+        return $this->sprint->belongsTo(Project::class);
+    }
 }

@@ -32,7 +32,7 @@ class JiraIssueService
         return $issues->map(function ($issueData) use ($sprintId) {
 
             $fields = $issueData['fields'] ?? [];
-            $timetracking = $fields['timetracking']['originalEEstimateSeconds'] ?? 0;
+            $timetracking = $fields['timetracking']['originalEstimateSeconds'] ?? 0;
             $timeSpent = $fields['timetracking']['timeSpentSeconds'] ?? 0;
 
             return Issue::updateOrCreate(

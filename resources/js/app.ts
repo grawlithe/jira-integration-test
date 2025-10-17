@@ -16,9 +16,13 @@ createInertiaApp({
             import.meta.glob<DefineComponent>('./pages/**/*.vue'),
         ),
     setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .mount(el);
+        const app = createApp({ render: () => h(App, props) });
+        // Pinia store setup
+        import('pinia').then(({ createPinia }) => {
+            app.use(createPinia());
+            app.use(plugin);
+            app.mount(el);
+        });
     },
     progress: {
         color: '#4B5563',

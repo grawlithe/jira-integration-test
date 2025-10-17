@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Auth\SocialiteAuthController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SyncController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -20,17 +21,15 @@ Route::get('/', function () {
 
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{project}', [ProjectController::class, 'show']);
-Route::get('/sync', [SyncController::class, 'syncAll']);
+Route::post('/sync', [SyncController::class, 'syncAll']);
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/test-jira', function(){
-    $client = new \App\Services\Jira\JiraService();
-    return $client->get('myself');
-});
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

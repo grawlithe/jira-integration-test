@@ -14,4 +14,9 @@ class Sprint extends Model
         'start_date',
         'end_date'
     ];
+
+    public function issues()
+    {
+        return $this->hasMany(Issue::class);
+    }
 }
