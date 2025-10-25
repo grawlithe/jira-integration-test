@@ -1,0 +1,6 @@
+-To properly use/test OAuth to my local dev environment, I used 'ngrok'. This app will give me an HTTPS proxy to my local URL
+-Update all the URLs from your env file to the generated URL of ngrok
+-Use API tokens instead of the scopes from OAuth to access JIRA API, the scopes from OAuth 2.0 can only be used in webhooks
+-There are specific project templates and types that the JIRA API can access/read the boards, sprints, and issues of: Template must be of "scrum" and type must be "company-managed" when creating a new project. 
+-I'm unable to properly use the live reload of vite when the ngrok proxy is running so I just run 'npm run build' if there are any changes I made on the frontend.
+-Properly initializing of node global packages.
