@@ -53,10 +53,10 @@ When you're ready to make this README your own, just edit this file and use the 
 Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
 
 ## Name
-Choose a self-explaining name for your project.
+Import time spent from JIRA
 
 ## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Importing Time tracking from JIRA. Displaying the original time estimated, total actual hours spent, and the progress by percentage per Projects, Boards/SPrints, and Issues.
 
 ## Badges
 On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
@@ -65,7 +65,36 @@ On some READMEs, you may see small images that convey metadata, such as whether 
 Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+composer install
+php artisan migrate
+npm install
+
+To properly Login via JIRA OAuth in your local development:
+-Use the `.env copy` instead of the default `.env`
+-Download/Install ngrok from here: https://ngrok.com/download/windows
+-After downloading/installing, run this command on the terminal from the ngrok directory:
+    .\ngrok.exe http --host-header=rewrite <<your-local-project-url>>:80
+-Copy the generated link to the `APP_URL` of your .env file. make sure to also edit the URL on the `ATLASSIAN_REDIRECT_URI` in the same .env file.
+-Make sure you have a JIRA account (doesn't matter if free or not).
+-Once your done signing up, paste your JIRA URL in the .env file
+    JIRA_BASE_URL="https://<<your-jira>>.atlassian.net"
+    JIRA_EMAIL="<<your-jira-email>>"
+-Go to JIRA Developer Console (https://developer.atlassian.com/console) and create an OAuth 2.0 Integration
+-Give your project a name then go to the Settings of that OAuth 2.0 App. Copy and paste the `Client ID` and `Secret` to the your .env file.
+-Go to the Authorization menu and click on the Configure button of the OAuth 2.0 (3L0) then paste the value of the `ATLASSIAN_REDIRECT_URI` from your .env file
+-Go to the Permissions menu and configure these 2 APIs: User Identity API and Personal data reporting API
+-From the User Identity API, enable 'read:me'
+-From Personal data reporting API, enable 'report:personal-data'
+-Next generate your own API tokens from here: https://id.atlassian.com/manage-profile/security/api-tokens
+    Just click on the Create API token and set the expiry date. Then copy and paste the generated token to the `JIRA_API_TOKEN` on your .env file
+
+JIRA Projects that are enabled to read/write/update/delete from the JIRA API has some specific requirements
+-Project template should be a 'Scrum' type
+-Project type should be 'Company-managed'
+If you created a project that are not in these 2 conditions, you might not be able to pick up the issues/tasks on that project.
+
+## Additional Note
+I cannot get to work the live reload function with vite while on ngrok proxy so run `npm run build` instead whenever you made changes on the Vue JS side.
 
 ## Usage
 Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
